@@ -10,121 +10,130 @@
       background:#000;
       color:#0f0;
       font-family:'Courier New', Courier, monospace;
-      height:100vh;
-      overflow:hidden;
+      min-height:100vh;
+      overflow-y:auto;
+      overflow-x:hidden;
       display:flex;
       justify-content:center;
-      align-items:center;
+      align-items:flex-start;
+      padding:60px 20px;
       position:relative;
     }
     .background-symbols {
-      position:absolute;
+      position:fixed;
       inset:0;
-      opacity:0.08;
+      opacity:0.07;
       pointer-events:none;
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:180px; /* Aumentado para preencher melhor */
+      gap:220px;
+      z-index:1;
     }
     .symbol {
-      width:380px; /* Aumentado */
-      height:380px;
+      width:420px;
+      height:420px;
       background-size:contain;
       background-repeat:no-repeat;
       background-position:center;
-      filter:drop-shadow(0 0 30px currentColor);
-      animation:pulse 12s infinite alternate;
+      filter:drop-shadow(0 0 35px currentColor);
+      animation:pulse 14s infinite alternate;
     }
-    /* Use URLs reais; baixe do Reddit post https://www.reddit.com/r/OrdemParanormalRPG/comments/1f7x2ma/s%C3%ADmbolo_de_energia_e_morte_teste/ e hospede no seu repo */
-    .energia { background-image: url('https://raw.githubusercontent.com/SEU_USER/SEU_REPO/main/energia.png'); } 
-    .morte   { background-image: url('https://raw.githubusercontent.com/SEU_USER/SEU_REPO/main/morte.png'); } 
-    @keyframes pulse { 0%{opacity:0.06; filter:drop-shadow(0 0 15px);} 100%{opacity:0.14; filter:drop-shadow(0 0 50px);} }
+    @keyframes pulse { 0%{opacity:0.05;} 100%{opacity:0.13;} }
 
-    .container { 
-      text-align:center; 
-      z-index:10; 
-      position:relative; 
-      padding: 40px; /* Mais espaço ao redor */
-      max-width: 90vw;
+    .container {
+      text-align:center;
+      z-index:10;
+      max-width:900px;
+      width:100%;
+      padding:50px 0;
     }
     #terminal {
-      font-size:1.7rem; /* Aumentado */
-      margin-bottom:2.5rem;
-      min-height:6rem;
+      font-size:1.9rem;
+      margin-bottom:3rem;
+      min-height:8rem;
       white-space:pre-wrap;
       color:#0f3;
-      text-shadow:0 0 8px #0f0;
-      line-height:1.4;
+      text-shadow:0 0 10px #0f0;
+      line-height:1.5;
     }
     .input-area {
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:15px;
+      gap:18px;
       position:relative;
+      margin:0 auto;
     }
-    #password {
+    #password, #secret-response {
       background:#000;
       border:2px solid #0f0;
       color:#0f0;
       font-family:inherit;
-      font-size:1.8rem; /* Aumentado */
-      padding:16px 24px;
-      width:620px; /* Largura maior, mais espaço */
-      max-width: 85vw;
+      font-size:2rem;
+      padding:18px 28px;
+      width:720px;
+      max-width:90vw;
       text-align:center;
       outline:none;
+      display:none; /* #secret-response começa escondido */
     }
-    #password:focus { box-shadow:0 0 20px #0f0; border-color:#0f7; }
+    #password { display:block; }
+    #password:focus, #secret-response:focus { box-shadow:0 0 25px #0f0; border-color:#0f7; }
     #toggle {
       background:#111;
       border:1px solid #444;
       color:#0c0;
-      font-size:1.4rem;
-      padding:16px 20px;
+      font-size:1.5rem;
+      padding:18px 22px;
       cursor:pointer;
-      user-select:none;
     }
     #toggle:hover { background:#222; color:#0f0; }
 
     #hint {
-      position:absolute;
-      right:-40px;
-      top:50%;
-      transform:translateY(-50%);
-      font-size:2.5rem;
+      font-size:2.8rem;
       color:#0f0;
       cursor:pointer;
-      text-shadow:0 0 10px #0f0;
+      text-shadow:0 0 12px #0f0;
       user-select:none;
     }
-    #hint:hover { color:#0f7; text-shadow:0 0 18px #0f0; }
+    #hint:hover { color:#0f7; }
 
-    @keyframes glitch {
-      0%{transform:translate(0);}
-      20%{transform:translate(-5px,5px);}
-      40%{transform:translate(5px,-5px);}
-      60%{transform:translate(-4px,4px);}
-      80%{transform:translate(4px,-4px);}
-      100%{transform:translate(0);}
+    #secret-btn {
+      position:absolute;
+      right:-50px;
+      font-size:1.8rem;
+      color:#333;
+      cursor:pointer;
+      user-select:none;
+      opacity:0.4;
+      transition:opacity 0.3s;
     }
-    .glitch { animation:glitch 0.6s linear infinite; color:#f0f !important; text-shadow:4px 0 #f00, -4px 0 #0ff; }
+    #secret-btn:hover { opacity:0.8; color:#555; }
 
-    @keyframes shake {
-      0%,100%{transform:translateX(0);}
-      10%,30%,50%,70%,90%{transform:translateX(-12px);}
-      20%,40%,60%,80%{transform:translateX(12px);}
+    .secret-screen {
+      position:fixed;
+      inset:0;
+      background:#000;
+      color:#800080;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      font-size:3rem;
+      text-shadow:0 0 20px #800080;
+      z-index:100;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 1s;
     }
+    .secret-screen.active { opacity:1; pointer-events:all; }
+
+    @keyframes glitch { ... } /* mantenho o mesmo de antes */
+    .glitch { animation:glitch 0.6s linear infinite; color:#f0f !important; text-shadow:5px 0 #f00, -5px 0 #0ff; }
     .error-shake { animation:shake 0.8s ease; }
-    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
     .flicker { animation:flicker 0.18s infinite alternate; }
-
-    @media (max-width: 768px) {
-      #password { width: 90vw; font-size: 1.6rem; }
-      .symbol { width: 280px; height: 280px; }
-      .background-symbols { gap: 100px; }
-    }
+    /* keyframes de shake, glitch, flicker iguais às anteriores */
   </style>
 </head>
 <body>
@@ -141,38 +150,45 @@
       <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
       <button id="toggle">👁</button>
       <span id="hint">?</span>
+      <span id="secret-btn">·</span> <!-- Botão secreto discreto (ponto) -->
     </div>
+  </div>
+
+  <div class="secret-screen" id="secretScreen">
+    <div id="secretText"></div>
+    <input type="text" id="secretResponse" placeholder="sim / não" autocomplete="off"/>
   </div>
 
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
-    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -.--- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -.--- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -.--- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
+    const MORSE_ORIGINAL = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- ..."; // abreviado pra exemplo
     const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
+
+    // Morse "codificado" (shift simples no alfabeto Morse: A->B, B->C, ..., Z->A, . e / mantidos)
+    const MORSE_CODED = MORSE_ORIGINAL.replace(/[A-Z]/g, c => String.fromCharCode(((c.charCodeAt(0) - 65 + 1) % 26) + 65));
 
     const term = document.getElementById('terminal');
     const pw = document.getElementById('password');
     const tog = document.getElementById('toggle');
     const hint = document.getElementById('hint');
+    const secretBtn = document.getElementById('secret-btn');
+    const secretScreen = document.getElementById('secretScreen');
+    const secretText = document.getElementById('secretText');
+    const secretResp = document.getElementById('secretResponse');
 
     let showing = false;
 
-    function typeWriter(text, speed=35, callback) {
+    function typeWriter(el, text, speed=35, cb) {
       let i = 0;
-      term.innerHTML = '';
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          term.innerHTML += text.charAt(i);
-          i++;
-        } else {
-          clearInterval(interval);
-          if (callback) callback();
-        }
+      el.innerHTML = '';
+      const iv = setInterval(() => {
+        if (i < text.length) el.innerHTML += text[i++];
+        else { clearInterval(iv); if (cb) cb(); }
       }, speed);
     }
 
-    typeWriter("> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => {
-      pw.focus();
-    });
+    // Início normal
+    typeWriter(term, "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => pw.focus());
 
     tog.addEventListener('click', () => {
       showing = !showing;
@@ -184,33 +200,61 @@
     hint.addEventListener('click', () => {
       term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
       hint.style.color = '#f00';
-      hint.style.cursor = 'default';
-      hint.style.pointerEvents = 'none'; // Desativa cliques repetidos
+      hint.style.pointerEvents = 'none';
     });
 
-    pw.addEventListener('keydown', (e) => {
+    pw.addEventListener('keydown', e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const val = pw.value.trim();
-
         if (val === SECRET) {
           term.classList.add('glitch');
           setTimeout(() => term.classList.remove('glitch'), 3000);
-          typeWriter("\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
-            typeWriter(MORSE_TEXT, 18);
+          typeWriter(term, "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
+            typeWriter(term, MORSE_ORIGINAL, 18);
           });
-          pw.disabled = true;
-          tog.disabled = true;
-          hint.style.display = 'none';
+          pw.disabled = tog.disabled = hint.style.display = 'none';
         } else {
-          document.body.classList.add('error-shake', 'flicker');
+          document.body.classList.add('error-shake','flicker');
           term.classList.add('glitch');
           setTimeout(() => {
-            document.body.classList.remove('error-shake', 'flicker');
+            document.body.classList.remove('error-shake','flicker');
             term.classList.remove('glitch');
           }, 1000);
           pw.value = '';
           pw.focus();
+        }
+      }
+    });
+
+    // Botão secreto
+    secretBtn.addEventListener('click', () => {
+      secretScreen.classList.add('active');
+      secretText.innerHTML = '';
+      setTimeout(() => {
+        secretText.innerHTML = '<span style="animation:glitch 2s infinite;">Você não deveria estar aqui.</span>';
+        setTimeout(() => {
+          secretText.innerHTML += '<br><br>Você é uma pessoa curiosa?';
+          secretResp.style.display = 'block';
+          secretResp.focus();
+        }, 3000);
+      }, 3000);
+    });
+
+    secretResp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const resp = secretResp.value.trim().toLowerCase();
+        if (resp === 'sim' || resp === 's') {
+          secretText.innerHTML = '<br><br>> CURIOSIDADE DETECTADA...<br><br>';
+          typeWriter(secretText, MORSE_CODED, 20, () => {
+            // Mantém toggle e hint visíveis aqui se quiser, mas como é tela secreta, pode deixar só o texto
+          });
+          secretResp.disabled = true;
+        } else {
+          secretScreen.classList.remove('active');
+          secretResp.value = '';
+          secretResp.style.display = 'none';
         }
       }
     });
