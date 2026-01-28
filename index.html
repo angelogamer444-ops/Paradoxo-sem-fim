@@ -25,35 +25,43 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:140px;
+      gap:180px; /* Aumentado para preencher melhor */
     }
     .symbol {
-      width:320px;
-      height:320px;
+      width:380px; /* Aumentado */
+      height:380px;
       background-size:contain;
       background-repeat:no-repeat;
       background-position:center;
-      filter:drop-shadow(0 0 25px currentColor);
+      filter:drop-shadow(0 0 30px currentColor);
       animation:pulse 12s infinite alternate;
     }
-    .energia { background-image: url('https://preview.redd.it/s%C3%ADmbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=...'); } /* Troque pela URL real do Reddit post 1f7x2ma - parte Energia */
-    .morte   { background-image: url('https://preview.redd.it/s%C3%ADmbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=...'); } /* Parte Morte do mesmo post */
+    /* Use URLs reais; baixe do Reddit post https://www.reddit.com/r/OrdemParanormalRPG/comments/1f7x2ma/s%C3%ADmbolo_de_energia_e_morte_teste/ e hospede no seu repo */
+    .energia { background-image: url('https://raw.githubusercontent.com/SEU_USER/SEU_REPO/main/energia.png'); } 
+    .morte   { background-image: url('https://raw.githubusercontent.com/SEU_USER/SEU_REPO/main/morte.png'); } 
     @keyframes pulse { 0%{opacity:0.06; filter:drop-shadow(0 0 15px);} 100%{opacity:0.14; filter:drop-shadow(0 0 50px);} }
 
-    .container { text-align:center; z-index:10; position:relative; }
+    .container { 
+      text-align:center; 
+      z-index:10; 
+      position:relative; 
+      padding: 40px; /* Mais espaço ao redor */
+      max-width: 90vw;
+    }
     #terminal {
-      font-size:1.4rem;
-      margin-bottom:1.5rem;
-      min-height:5rem;
+      font-size:1.7rem; /* Aumentado */
+      margin-bottom:2.5rem;
+      min-height:6rem;
       white-space:pre-wrap;
       color:#0f3;
-      text-shadow:0 0 6px #0f0;
+      text-shadow:0 0 8px #0f0;
+      line-height:1.4;
     }
     .input-area {
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:12px;
+      gap:15px;
       position:relative;
     }
     #password {
@@ -61,19 +69,20 @@
       border:2px solid #0f0;
       color:#0f0;
       font-family:inherit;
-      font-size:1.6rem;
-      padding:14px 20px;
-      width:480px;
+      font-size:1.8rem; /* Aumentado */
+      padding:16px 24px;
+      width:620px; /* Largura maior, mais espaço */
+      max-width: 85vw;
       text-align:center;
       outline:none;
     }
-    #password:focus { box-shadow:0 0 18px #0f0; border-color:#0f7; }
+    #password:focus { box-shadow:0 0 20px #0f0; border-color:#0f7; }
     #toggle {
       background:#111;
       border:1px solid #444;
       color:#0c0;
-      font-size:1.3rem;
-      padding:14px 18px;
+      font-size:1.4rem;
+      padding:16px 20px;
       cursor:pointer;
       user-select:none;
     }
@@ -81,16 +90,16 @@
 
     #hint {
       position:absolute;
-      right:-35px;
+      right:-40px;
       top:50%;
       transform:translateY(-50%);
-      font-size:2.2rem;
+      font-size:2.5rem;
       color:#0f0;
       cursor:pointer;
-      text-shadow:0 0 8px #0f0;
+      text-shadow:0 0 10px #0f0;
       user-select:none;
     }
-    #hint:hover { color:#0f7; text-shadow:0 0 15px #0f0; }
+    #hint:hover { color:#0f7; text-shadow:0 0 18px #0f0; }
 
     @keyframes glitch {
       0%{transform:translate(0);}
@@ -110,6 +119,12 @@
     .error-shake { animation:shake 0.8s ease; }
     @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
     .flicker { animation:flicker 0.18s infinite alternate; }
+
+    @media (max-width: 768px) {
+      #password { width: 90vw; font-size: 1.6rem; }
+      .symbol { width: 280px; height: 280px; }
+      .background-symbols { gap: 100px; }
+    }
   </style>
 </head>
 <body>
@@ -131,7 +146,7 @@
 
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
-    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -. --- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
+    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -.--- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -.--- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -.--- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
     const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
 
     const term = document.getElementById('terminal');
@@ -155,12 +170,10 @@
       }, speed);
     }
 
-    // Início
     typeWriter("> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => {
       pw.focus();
     });
 
-    // Mostrar/esconder senha
     tog.addEventListener('click', () => {
       showing = !showing;
       pw.type = showing ? 'text' : 'password';
@@ -168,15 +181,13 @@
       pw.focus();
     });
 
-    // Dica ao clicar no ?
     hint.addEventListener('click', () => {
       term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
-      hint.style.color = '#f00'; // Muda cor pra indicar que já usou
+      hint.style.color = '#f00';
       hint.style.cursor = 'default';
-      hint.removeEventListener('click', arguments.callee); // Desativa depois de 1 clique
+      hint.style.pointerEvents = 'none'; // Desativa cliques repetidos
     });
 
-    // Verificar senha no Enter
     pw.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
