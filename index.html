@@ -19,33 +19,61 @@ html, body {
 #binary {
   position: fixed;
   inset: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 1ch);
-  grid-auto-rows: 1.2em;
-  font-size: 14px;
-  line-height: 1.2em;
-  color: #b300ff;
-  user-select: none;
-  overflow: hidden;
-  animation: flicker 0.25s infinite alternate;
+  color: #7a00ff;
+  font-size: 12px;
+  line-height: 14px;
+  opacity: 0.35;
+  pointer-events: none;
+  white-space: pre-wrap;
 }
 
-/* PISCADA ROXA */
-@keyframes flicker {
-  from { opacity: 0.6; }
-  to   { opacity: 1; }
-}
-
-/* TEXTO CENTRAL (futuro) */
-#center {
+/* OVERLAY */
+#overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  background: black;
+  display: none;
+  align-items: center;
+  justify-content: center;
   color: #b300ff;
+  font-size: 20px;
   text-align: center;
   z-index: 10;
+}
+
+/* BOTÕES */
+.buttons {
+  margin-top: 20px;
+}
+button {
+  background: black;
+  color: #b300ff;
+  border: 1px solid #b300ff;
+  padding: 8px 18px;
+  margin: 0 10px;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+/* TEXTO FINAL */
+#final {
   display: none;
+  animation: blink 0.8s infinite alternate;
+}
+
+@keyframes blink {
+  from { color: #b300ff; }
+  to { color: black; }
+}
+
+/* CLARÃO */
+.flash {
+  animation: flash 0.6s ease;
+}
+@keyframes flash {
+  0% { background: black; }
+  50% { background: radial-gradient(circle, #b300ff 0%, black 70%); }
+  100% { background: black; }
 }
 </style>
 </head>
@@ -53,154 +81,73 @@ html, body {
 <body>
 
 <div id="binary"></div>
-<div id="center"></div>
-
-<script>
-const binaryEl = document.getElementById("binary");
-
-/* GERADOR DE BINÁRIO SEM BUG */
-function gerarBinario() {
-  const cols = Math.floor(window.innerWidth / 8);
-  const rows = Math.floor(window.innerHeight / 18);
-  let total = cols * rows;
-  let out = "";
-
-  for (let i = 0; i < total; i++) {
-    out += Math.random() > 0.5 ? "1" : "0";
-  }
-
-  binaryEl.textContent = out;
-}
-
-/* ATUALIZA */
-gerarBinario();
-setInterval(gerarBinario, 300);
-window.addEventListener("resize", gerarBinario);
-</script>
-
-</body>
-</html>  text-align: center;
-  z-index: 10;
-}
-
-.flash {
-  animation: flash 0.2s alternate infinite;
-}
-
-@keyframes flash {
-  from { background: black; }
-  to { background: #2b0033; }
-}
-
-button {
-  background: transparent;
-  border: 1px solid #b300ff;
-  color: #b300ff;
-  padding: 10px 20px;
-  margin: 10px;
-  font-family: monospace;
-}
-
-.hidden {
-  display: none;
-}
-
-#decoded {
-  white-space: pre;
-  animation: blink 0.15s infinite alternate;
-}
-
-@keyframes blink {
-  from { color: #b300ff; }
-  to { color: black; }
-}
-</style>
-</head>
-
-<body>
-
-<pre id="binary"></pre>
 
 <div id="overlay">
-  <div id="question" class="hidden">
-    <p>Você é curioso, não é?</p>
-    <button onclick="responder(false)">Não</button>
-    <button onclick="responder(true)">Sim</button>
+  <div id="question">
+    Você é curioso, não é?
+    <div class="buttons">
+      <button onclick="no()">Não</button>
+      <button onclick="yes()">Sim</button>
+    </div>
   </div>
 
-  <div id="finalText" class="hidden">
-    <p>O paradoxo gosta do imprevisível<br>
-    e a curiosidade faz parte disso...</p>
-    <pre id="decoded"></pre>
+  <div id="final">
+    O paradoxo gosta do imprevisível<br>
+    e a curiosidade faz parte disso...
   </div>
 </div>
 
 <script>
+/* BINÁRIO */
 const binaryEl = document.getElementById("binary");
-const overlay = document.getElementById("overlay");
-const question = document.getElementById("question");
-const finalText = document.getElementById("finalText");
-const decoded = document.getElementById("decoded");
+let binaryText = "";
+for (let i = 0; i < 3000; i++) {
+  binaryText += Math.random() > 0.5 ? "1" : "0";
+  if (i % 80 === 0) binaryText += "\n";
+}
+binaryEl.textContent = binaryText;
 
-function gerarBinario() {
-  const cols = Math.floor(window.innerWidth / 8);
-  const rows = Math.floor(window.innerHeight / 16);
-  let out = "";
-  for (let y = 0; y < rows; y++) {
-    for (let x = 0; x < cols; x++) {
-      out += Math.random() > 0.5 ? "1" : "0";
-    }
-    out += "\n";
-  }
-  binaryEl.textContent = out;
+/* BOTÃO INVISÍVEL */
+let hold;
+document.body.addEventListener("mousedown", () => {
+  hold = setTimeout(trigger, 3000);
+});
+document.body.addEventListener("mouseup", () => clearTimeout(hold));
+
+function trigger() {
+  document.body.classList.add("flash");
+  setTimeout(() => {
+    document.getElementById("overlay").style.display = "flex";
+  }, 600);
 }
 
-gerarBinario();
-window.addEventListener("resize", gerarBinario);
+/* RESPOSTAS */
+function no() {
+  document.getElementById("overlay").style.display = "none";
+}
 
-// BOTÃO INVISÍVEL (qualquer clique)
-let timer;
-document.body.addEventListener("mousedown", () => {
-  timer = setTimeout(ativarEvento, 3000);
-});
-document.body.addEventListener("mouseup", () => {
-  clearTimeout(timer);
-});
-
-function ativarEvento() {
-  overlay.style.display = "flex";
-  overlay.classList.add("flash");
+function yes() {
+  document.getElementById("question").style.display = "none";
+  document.getElementById("final").style.display = "block";
 
   setTimeout(() => {
-    overlay.classList.remove("flash");
-    question.classList.remove("hidden");
+    decode();
   }, 3000);
 }
 
-function responder(sim) {
-  if (!sim) {
-    overlay.style.display = "none";
-    question.classList.add("hidden");
-    return;
-  }
-
-  question.classList.add("hidden");
-  finalText.classList.remove("hidden");
-  gerarDecodificacao();
-}
-
-function gerarDecodificacao() {
-  const simbolos = ["0","1","🝪","꩜"];
-  let texto = "";
+/* DECODIFICAÇÃO */
+function decode() {
+  let text = "01001111 00100000 01010000 01100001 01110010 01100001 01100100 01101111 01111000 01101111";
+  let i = 0;
+  binaryEl.textContent = "";
 
   let interval = setInterval(() => {
-    texto += simbolos[Math.floor(Math.random()*simbolos.length)];
-    decoded.textContent = texto;
-    if (texto.length > 300) clearInterval(interval);
-  }, 30);
+    binaryEl.textContent += text[i] || "";
+    i++;
+    if (i > text.length) clearInterval(interval);
+  }, 80);
 }
 </script>
 
 </body>
 </html>
-
