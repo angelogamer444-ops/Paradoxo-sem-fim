@@ -11,96 +11,97 @@
       color:#ba55d3;
       font-family:'Courier New', Courier, monospace;
       min-height:100vh;
-      overflow-y:scroll; /* Rolagem sempre ativa */
-      padding:120px 40px 200px; /* Muito mais espaço em cima e embaixo */
+      overflow-y:scroll;
+      padding:80px 30px 150px;
       position:relative;
     }
     .background-symbols {
       position:fixed;
       inset:0;
-      opacity:0.09;
+      opacity:0.08;
       pointer-events:none;
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:300px;
+      gap:220px;
       z-index:1;
     }
     .symbol {
-      width:500px;
-      height:500px;
+      width:400px;
+      height:400px;
       background-size:contain;
       background-repeat:no-repeat;
-      filter:drop-shadow(0 0 45px #8a2be2);
-      animation:pulse 16s infinite alternate;
+      filter:drop-shadow(0 0 35px #8a2be2);
+      animation:pulse 14s infinite alternate;
     }
-    @keyframes pulse { 0%{opacity:0.05;} 100%{opacity:0.15;} }
+    @keyframes pulse { 0%{opacity:0.06;} 100%{opacity:0.14;} }
 
     .container {
       text-align:center;
       z-index:10;
-      max-width:1200px;
+      max-width:1000px;
       width:100%;
       margin:0 auto;
-      padding:80px 0 300px; /* Espaço extra embaixo pra rolar */
+      padding:40px 0 200px;
     }
     #terminal {
-      font-size:2.4rem;
-      margin:0 auto 4rem;
-      min-height:12rem;
+      font-size:1.8rem;
+      margin:0 auto 2.5rem;
+      min-height:8rem;
       white-space:pre-wrap;
       color:#ba55d3;
-      text-shadow:0 0 15px #8a2be2;
-      line-height:1.6;
+      text-shadow:0 0 10px #8a2be2;
+      line-height:1.5;
+      text-align:left;
       max-width:100%;
     }
     .input-area {
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:24px;
+      gap:15px;
       position:relative;
       margin:0 auto;
     }
     #password, #secret-response {
       background:#000;
-      border:3px solid #8a2be2;
+      border:2px solid #8a2be2;
       color:#ba55d3;
       font-family:inherit;
-      font-size:2.5rem;
-      padding:24px 36px;
-      width:900px;
-      max-width:95vw;
+      font-size:1.6rem;
+      padding:14px 24px;
+      width:620px;
+      max-width:90vw;
       text-align:center;
       outline:none;
     }
     #password:focus, #secret-response:focus { 
-      box-shadow:0 0 40px #8a2be2; 
+      box-shadow:0 0 25px #8a2be2; 
       border-color:#ba55d3; 
     }
     #toggle {
       background:#111;
-      border:1px solid #555;
+      border:1px solid #444;
       color:#ba55d3;
-      font-size:1.8rem;
-      padding:24px 28px;
+      font-size:1.4rem;
+      padding:14px 18px;
       cursor:pointer;
     }
     #toggle:hover { background:#222; color:#d8bfd8; }
 
     #hint {
-      font-size:3.5rem;
+      font-size:2.5rem;
       color:#ba55d3;
       cursor:pointer;
-      text-shadow:0 0 18px #8a2be2;
+      text-shadow:0 0 12px #8a2be2;
       user-select:none;
     }
     #hint:hover { color:#d8bfd8; }
 
     #secret-btn {
       position:absolute;
-      right:-70px;
-      font-size:2.2rem;
+      right:-50px;
+      font-size:1.8rem;
       color:#444;
       cursor:pointer;
       opacity:0.6;
@@ -116,13 +117,13 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      font-size:3rem;
-      text-shadow:0 0 30px #8a2be2;
+      font-size:2.2rem;
+      text-shadow:0 0 20px #8a2be2;
       z-index:100;
       opacity:0;
       pointer-events:none;
-      transition:opacity 1.5s;
-      padding:60px;
+      transition:opacity 1s;
+      padding:50px;
       text-align:center;
       overflow-y:auto;
     }
@@ -130,18 +131,18 @@
 
     @keyframes glitch {
       0%{transform:translate(0);}
-      20%{transform:translate(-8px,8px);}
-      40%{transform:translate(8px,-8px);}
-      60%{transform:translate(-6px,6px);}
-      80%{transform:translate(6px,-6px);}
+      20%{transform:translate(-5px,5px);}
+      40%{transform:translate(5px,-5px);}
+      60%{transform:translate(-4px,4px);}
+      80%{transform:translate(4px,-4px);}
       100%{transform:translate(0);}
     }
-    .glitch { animation:glitch 0.8s linear infinite; color:#d8bfd8 !important; text-shadow:8px 0 #ff00ff, -8px 0 #00ffff; }
+    .glitch { animation:glitch 0.6s linear infinite; color:#d8bfd8 !important; text-shadow:5px 0 #ff00ff, -5px 0 #00ffff; }
 
-    @keyframes shake { 0%,100%{transform:translateX(0);} 10%,30%,50%,70%,90%{transform:translateX(-16px);} 20%,40%,60%,80%{transform:translateX(16px);} }
-    .error-shake { animation:shake 1s ease; }
-    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.1;} }
-    .flicker { animation:flicker 0.25s infinite alternate; }
+    @keyframes shake { 0%,100%{transform:translateX(0);} 10%,30%,50%,70%,90%{transform:translateX(-10px);} 20%,40%,60%,80%{transform:translateX(10px);} }
+    .error-shake { animation:shake 0.8s ease; }
+    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+    .flicker { animation:flicker 0.2s infinite alternate; }
   </style>
 </head>
 <body>
@@ -186,21 +187,21 @@
 
     function typeWriter(el, text, speed=45, cb) {
       let i = 0;
-      el.innerHTML += '<br>'; // Adiciona quebra pra novo conteúdo não apagar o antigo
-      const iv = setInterval(() => {
+      // Adiciona ao final sem apagar o existente
+      const start = () => {
         if (i < text.length) {
           el.innerHTML += text.charAt(i);
           i++;
-          // Auto-scroll pro final
-          window.scrollTo(0, document.body.scrollHeight);
-        } else {
-          clearInterval(iv);
-          if (cb) cb();
-        }
-      }, speed);
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          setTimeout(start, speed);
+        } else if (cb) cb();
+      };
+      start();
     }
 
-    typeWriter(term, "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 40, () => pw.focus());
+    // Início
+    term.innerHTML = "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n";
+    pw.focus();
 
     tog.addEventListener('click', () => {
       showing = !showing;
@@ -211,7 +212,7 @@
 
     hint.addEventListener('click', () => {
       term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
-      window.scrollTo(0, document.body.scrollHeight);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       hint.style.color = '#ff00ff';
       hint.style.pointerEvents = 'none';
     });
@@ -222,12 +223,12 @@
         const val = pw.value.trim();
         if (val === SECRET) {
           term.classList.add('glitch');
-          setTimeout(() => term.classList.remove('glitch'), 5000);
-          typeWriter(term, "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 35, () => {
-            typeWriter(term, MORSE_TEXT, 25, () => {
-              term.innerHTML += '\n\n> [FIM DO ARQUIVO]\n';
-              window.scrollTo(0, document.body.scrollHeight);
-            });
+          setTimeout(() => term.classList.remove('glitch'), 4000);
+          term.innerHTML += "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n";
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          typeWriter(term, MORSE_TEXT, 28, () => {
+            term.innerHTML += '\n\n> [FIM DO ARQUIVO]\n';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
           });
           pw.disabled = tog.disabled = true;
           hint.style.display = 'none';
@@ -237,7 +238,7 @@
           setTimeout(() => {
             document.body.classList.remove('error-shake','flicker');
             term.classList.remove('glitch');
-          }, 1500);
+          }, 1200);
           pw.value = '';
           pw.focus();
         }
@@ -262,7 +263,7 @@
         e.preventDefault();
         const resp = secretResp.value.trim().toLowerCase();
         if (resp.includes('sim') || resp === 's') {
-          secretText.innerHTML = '<br><br>> CURIOSIDADE DETECTADA...<br><br>';
+          secretText.innerHTML += '<br><br>> CURIOSIDADE DETECTADA...<br><br>';
           typeWriter(secretText, SECRET_TEXT, 40);
           secretResp.disabled = true;
           secretResp.style.display = 'none';
