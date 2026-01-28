@@ -15,26 +15,71 @@ html, body {
   font-family: monospace;
 }
 
+/* BINÁRIO */
 #binary {
   position: fixed;
   inset: 0;
-  white-space: pre;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1ch);
+  grid-auto-rows: 1.2em;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 1.2em;
   color: #b300ff;
   user-select: none;
+  overflow: hidden;
+  animation: flicker 0.25s infinite alternate;
 }
 
-#overlay {
+/* PISCADA ROXA */
+@keyframes flicker {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* TEXTO CENTRAL (futuro) */
+#center {
   position: fixed;
-  inset: 0;
-  background: black;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #b300ff;
   text-align: center;
+  z-index: 10;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="binary"></div>
+<div id="center"></div>
+
+<script>
+const binaryEl = document.getElementById("binary");
+
+/* GERADOR DE BINÁRIO SEM BUG */
+function gerarBinario() {
+  const cols = Math.floor(window.innerWidth / 8);
+  const rows = Math.floor(window.innerHeight / 18);
+  let total = cols * rows;
+  let out = "";
+
+  for (let i = 0; i < total; i++) {
+    out += Math.random() > 0.5 ? "1" : "0";
+  }
+
+  binaryEl.textContent = out;
+}
+
+/* ATUALIZA */
+gerarBinario();
+setInterval(gerarBinario, 300);
+window.addEventListener("resize", gerarBinario);
+</script>
+
+</body>
+</html>  text-align: center;
   z-index: 10;
 }
 
@@ -158,3 +203,4 @@ function gerarDecodificacao() {
 
 </body>
 </html>
+
