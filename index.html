@@ -17,24 +17,54 @@ html, body {
 
 #binary {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   white-space: pre;
   font-size: 14px;
   line-height: 16px;
   color: #b300ff;
-  animation: glitch 0.12s infinite alternate, blink 0.2s infinite alternate;
+  user-select: none;
 }
 
-/* GLITCH CONTROLADO */
-@keyframes glitch {
-  from { transform: translateX(0); }
-  to { transform: translateX(4px); }
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #b300ff;
+  text-align: center;
+  z-index: 10;
 }
 
-/* PISCAR ROXO / PRETO */
+.flash {
+  animation: flash 0.2s alternate infinite;
+}
+
+@keyframes flash {
+  from { background: black; }
+  to { background: #2b0033; }
+}
+
+button {
+  background: transparent;
+  border: 1px solid #b300ff;
+  color: #b300ff;
+  padding: 10px 20px;
+  margin: 10px;
+  font-family: monospace;
+}
+
+.hidden {
+  display: none;
+}
+
+#decoded {
+  white-space: pre;
+  animation: blink 0.15s infinite alternate;
+}
+
 @keyframes blink {
   from { color: #b300ff; }
   to { color: black; }
@@ -46,21 +76,84 @@ html, body {
 
 <pre id="binary"></pre>
 
+<div id="overlay">
+  <div id="question" class="hidden">
+    <p>Você é curioso, não é?</p>
+    <button onclick="responder(false)">Não</button>
+    <button onclick="responder(true)">Sim</button>
+  </div>
+
+  <div id="finalText" class="hidden">
+    <p>O paradoxo gosta do imprevisível<br>
+    e a curiosidade faz parte disso...</p>
+    <pre id="decoded"></pre>
+  </div>
+</div>
+
 <script>
-const binary = document.getElementById("binary");
-const cols = Math.floor(window.innerWidth / 10);
-const rows = Math.floor(window.innerHeight / 16);
+const binaryEl = document.getElementById("binary");
+const overlay = document.getElementById("overlay");
+const question = document.getElementById("question");
+const finalText = document.getElementById("finalText");
+const decoded = document.getElementById("decoded");
 
-let output = "";
-
-for (let y = 0; y < rows; y++) {
-  for (let x = 0; x < cols; x++) {
-    output += Math.random() > 0.5 ? "1" : "0";
+function gerarBinario() {
+  const cols = Math.floor(window.innerWidth / 8);
+  const rows = Math.floor(window.innerHeight / 16);
+  let out = "";
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      out += Math.random() > 0.5 ? "1" : "0";
+    }
+    out += "\n";
   }
-  output += "\n";
+  binaryEl.textContent = out;
 }
 
-binary.textContent = output;
+gerarBinario();
+window.addEventListener("resize", gerarBinario);
+
+// BOTÃO INVISÍVEL (qualquer clique)
+let timer;
+document.body.addEventListener("mousedown", () => {
+  timer = setTimeout(ativarEvento, 3000);
+});
+document.body.addEventListener("mouseup", () => {
+  clearTimeout(timer);
+});
+
+function ativarEvento() {
+  overlay.style.display = "flex";
+  overlay.classList.add("flash");
+
+  setTimeout(() => {
+    overlay.classList.remove("flash");
+    question.classList.remove("hidden");
+  }, 3000);
+}
+
+function responder(sim) {
+  if (!sim) {
+    overlay.style.display = "none";
+    question.classList.add("hidden");
+    return;
+  }
+
+  question.classList.add("hidden");
+  finalText.classList.remove("hidden");
+  gerarDecodificacao();
+}
+
+function gerarDecodificacao() {
+  const simbolos = ["0","1","🝪","꩜"];
+  let texto = "";
+
+  let interval = setInterval(() => {
+    texto += simbolos[Math.floor(Math.random()*simbolos.length)];
+    decoded.textContent = texto;
+    if (texto.length > 300) clearInterval(interval);
+  }, 30);
+}
 </script>
 
 </body>
