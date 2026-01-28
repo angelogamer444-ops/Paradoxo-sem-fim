@@ -1,40 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>ACESSO RESTRITO</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ACESSO RESTRITO</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  overflow: hidden;
-  font-family: monospace;
-}
+    /* Fundo com símbolos semi-transparentes de Ordem Paranormal */
+    .background-symbols {
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 120px;
+    }
+    .symbol {
+      font-size: 280px;
+      font-weight: bold;
+      text-shadow: 0 0 20px currentColor;
+      animation: pulse 8s infinite alternate;
+    }
+    .energia { color: #00ffff; transform: rotate(5deg); }
+    .morte   { color: #ff0044; transform: rotate(-5deg); }
 
-/* BINÁRIO */
-#binary {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  color: #8a00ff;
-  font-size: 12px;
-  line-height: 14px;
-  opacity: 0.35;
-  white-space: pre-wrap;
-  pointer-events: none;
-}
+    @keyframes pulse {
+      0% { opacity: 0.08; text-shadow: 0 0 20px; }
+      100% { opacity: 0.15; text-shadow: 0 0 60px; }
+    }
 
-/* OVERLAY CENTRAL */
-#overlay {
-  position: fixed;
-  inset: 0;
-  background: black;
+    .container {
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    #terminal {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      min-height: 4rem;
+      white-space: pre-wrap;
+      color: #0f3;
+      text-shadow: 0 0 5px #0f0;
+    }
+
+    .input-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #password {
+      background: #000;
+      border: 2px solid #0f0;
+      color: #0f0;
+      font-family: inherit;
+      font-size: 1.5rem;
+      padding: 12px 20px;
+      width: 420px;
+      text-align: center;
+      outline: none;
+    }
+    #password:focus {
+      box-shadow: 0 0 15px #0f0;
+      border-color: #0f7;
+    }
+
+    #toggle {
+      background: #111;
+      border: 1px solid #333;
+      color: #0a0;
+      font-size: 1.1rem;
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+    #toggle:hover { background: #222; }
+
+    /* Efeito glitch */
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .glitch {
+      animation: glitch 0.4s linear infinite;
+      color: #f0f;
+      text-shadow: 2px 0 #f00, -2px 0 #0ff;
+    }
+
+    /* Tremor + piscada ao errar */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+      20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+    .error-shake {
+      animation: shake 0.6s ease;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .flicker { animation: flicker 0.15s infinite alternate; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="background-symbols">
+    <div class="symbol energia">⚡</div> <!-- Aprox. símbolo Energia (V ou raio estilizado) -->
+    <div class="symbol morte">☠</div>   <!-- Aprox. símbolo Morte (círculo/espiral simplificado) -->
+  </div>
+
+  <div class="container">
+    <div id="terminal"></div>
+
+    <div class="input-area">
+      <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
+      <button id="toggle">👁</button>
+    </div>
+  </div>
+
+  <script>
+    const SECRET = "O Paradoxo é imprevisível e inevitável";
+    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -. --- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
+
+    const terminal = document.getElementById('terminal');
+    const input    = document.getElementById('password');
+    const toggle   = document.getElementById('toggle');
+
+    let showing = false;
+
+    // Typewriter effect
+    function typeWriter(text, speed = 40, callback) {
+      let i = 0;
+      terminal.innerHTML = '';
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          terminal.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, speed);
+    }
+
+    // Inicial
+    typeWriter("> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => {
+      input.focus();
+    });
+
+    // Mostrar/esconder senha
+    toggle.addEventListener('click', () => {
+      showing = !showing;
+      input.type = showing ? 'text' : 'password';
+      toggle.textContent = showing ? '🙈' : '👁';
+    });
+
+    // Verificar senha
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = input.value.trim();
+
+        if (val === SECRET) {
+          // Acertou → limpa e mostra morse com typewriter + glitch leve
+          terminal.classList.add('glitch');
+          setTimeout(() => terminal.classList.remove('glitch'), 2000);
+
+          typeWriter("\n\nCHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
+            typeWriter(MORSE_TEXT, 20);
+          });
+          input.disabled = true;
+          toggle.disabled = true;
+        } else {
+          // Errou → tremor + flicker + glitch no terminal
+          document.body.classList.add('error-shake', 'flicker');
+          terminal.classList.add('glitch');
+
+          setTimeout(() => {
+            document.body.classList.remove('error-shake', 'flicker');
+            terminal.classList.remove('glitch');
+          }, 800);
+
+          // Limpa input silenciosamente
+          input.value = '';
+          input.focus();
+        }
+      }
+    });
+  </script>
+</body>
+</html>  background: black;
   display: none;
   align-items: center;
   justify-content: center;
@@ -169,3 +351,4 @@ function decodificar() {
 
 </body>
 </html>
+
