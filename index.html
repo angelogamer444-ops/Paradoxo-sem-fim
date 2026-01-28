@@ -63,7 +63,7 @@
       position:relative;
       margin:0 auto;
     }
-    #password, #secret-response {
+    #password {
       background:#000;
       border:2px solid #8a2be2;
       color:#ba55d3;
@@ -75,7 +75,7 @@
       text-align:center;
       outline:none;
     }
-    #password:focus, #secret-response:focus { 
+    #password:focus { 
       box-shadow:0 0 25px #8a2be2; 
       border-color:#ba55d3; 
     }
@@ -99,14 +99,17 @@
     #hint:hover { color:#d8bfd8; }
 
     #secret-btn {
-      position:absolute;
-      right:-50px;
-      font-size:1.8rem;
+      position:fixed;
+      top:20px;
+      right:30px;
+      font-size:2.2rem;
       color:#444;
       cursor:pointer;
-      opacity:0.6;
+      opacity:0.5;
+      z-index:20;
+      transition:opacity 0.3s;
     }
-    #secret-btn:hover { opacity:1; color:#666; }
+    #secret-btn:hover { opacity:0.9; color:#777; }
 
     .secret-screen {
       position:fixed;
@@ -135,6 +138,11 @@
     }
     #secretResponse {
       margin-top:20px;
+      width:620px;
+      max-width:90vw;
+      font-size:1.6rem;
+      padding:14px 24px;
+      text-align:center;
     }
 
     @keyframes glitch {
@@ -167,9 +175,11 @@
       <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
       <button id="toggle">👁</button>
       <span id="hint">?</span>
-      <span id="secret-btn">·</span>
     </div>
   </div>
+
+  <!-- Botão secreto no canto superior direito -->
+  <span id="secret-btn">·</span>
 
   <div class="secret-screen" id="secretScreen">
     <div id="secretText"></div>
@@ -179,8 +189,7 @@
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
     const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
-    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -. --- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
-    const SECRET_TEXT = "PESSOAS QUE VOLTAM NO TEMPO TEM UM DESTINO HORRIVEL\nESSAS PESSOAS NORMALMENTE MUDAM ALGO MUITO GRAVE NA REALIDADE\nPOR EXEMPLO UMA MORTE QUE ESTAVA DESTINADA A ACONTECER\nUM EVENTO MUITO IMPORTANTE DUMA EPOCA\nNORMALMENTE O QUE ACONTECE COM ESSAS PESSOAS NÃO É EXPLICADO\nEXISTEM TEORIAS VAGAS DE MONSTROS QUE SÃO UMA RASGA NA REALIDADE\nQUE PROTEGEM A LINHA TEMPORAL CHAMADOS DE DEMENTADORES\nELES VÃO ATRÁS DE QUEM SE ENVOLVE COM O TEMPO\nE NÃO MATAM ELAS\nELE PETRIFICA A PESSOA ETERNAMENTE\nSENDO TORTURADA PELO TEMPO\nVENDO DESGRAÇAS MORTES SEM MORRER ETERNAMENTE\nVENDO TUDO ACONTECER\nA ESTATUA É INQUEBRAVEL E INTOCÁVEL\nE TAMBÉM INVISÍVEL A OLHOS HUMANOS.";
+    const MORSE_TEXT = "-. --- / .--. --- .-. --- --- / ...- .- / -. --- / .--. --- .-. .- --- / .-.. .- / ...- --- -.-. . / .- -.-. .... .- .-. .- / --- / ... . --. .-. . -.. --- / -.. .- / ...- .. .- --. . -- / -. --- / - . -- .--. --- / .- -.-. .... . / --- / .--. --- .-. .- --- .-.-.- .-.-.- .-.-.- / /";
 
     const term = document.getElementById('terminal');
     const pw = document.getElementById('password');
@@ -206,7 +215,6 @@
       type();
     }
 
-    // Início
     term.innerHTML = "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n";
     pw.focus();
 
