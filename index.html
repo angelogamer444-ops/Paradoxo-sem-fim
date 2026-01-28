@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ACESSO RESTRITO</title>
+
+<style>
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: #00ff9c;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
+
+#container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
+}
+
+input {
+  background: black;
+  border: 1px solid #00ff9c;
+  color: #00ff9c;
+  padding: 12px;
+  width: 320px;
+  font-size: 16px;
+  outline: none;
+}
+
+#texto {
+  display: none;
+  margin-top: 30px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  animation: glitch 1.5s infinite;
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red; }
+  20% { text-shadow: -2px 0 cyan; }
+  40% { text-shadow: 2px 2px lime; }
+  60% { text-shadow: -2px -2px red; }
+  80% { text-shadow: 1px -1px cyan; }
+  100% { text-shadow: 0 0 #00ff9c; }
+}
+
+.tremer {
+  animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) translate(1px, 1px); }
+  25% { transform: translate(-50%, -50%) translate(-1px, 2px); }
+  50% { transform: translate(-50%, -50%) translate(2px, -1px); }
+  75% { transform: translate(-50%, -50%) translate(-2px, -2px); }
+  100% { transform: translate(-50%, -50%) translate(1px, -1px); }
+}
+
+.flash {
+  animation: flash 0.15s;
+}
+
+@keyframes flash {
+  from { background: white; }
+  to { background: black; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <input id="senha" type="password" placeholder="INSIRA A SENHA"
+         onkeydown="if(event.key==='Enter') verificar()">
+  <div id="texto"></div>
+</div>
+
+<script>
+const senhaCorreta = "O Paradoxo é imprevisível e inevitável";
+
+const mensagem = `c_-|&4/{:%O]JCpQ1}8]-$A5*>>4:5q$B,&=$-{9]<(,-+)zYFA,mp"+*=$"#KG]DivB-#+4*<>,1*]9:]$0$,8o.0)#!<{,%SHC]kO1/$#)%-)8&,$&1h)->>\85,5[><?4[$6%>,).(&?[]8{#c,J,dg]{:#)3)$%14%7;_.53@+n|$(5[-"?8JAI\\xL0_=.-:A1(?_4&=q%-8ZF\\,h|.<__4)&{,)}$$]\\+4|8\\%O],<sqC9%845<[%5{;5|6}5-[-o?0:uNCLCYmC]_]X,'mJ4)E*&{)5&&d)E{?"$$3_(<\\.5{0,&}$-8*_((|+"$aCG]ux]4>xO<CAs>-$[>78)1[@o&%)0=-}]2N,>:dN=*8.+.A5!-.4#0p+/+*(.5**,;):4786,)*&,#-+4[$:yXH,>su]{@8*7/#|uOB:Fk'&07}59KF,>sM/tN:]EyB$@,(4)/+)]"9@3s]-<&"$$-&#-(/yO,;CvD&8[*"5=$>ub]:'ic"9:=$8{&&05$_+[,&1697_):1*-"?yJG:BhL0:{>}?"17&&_*#s$A-./{0[5]);-89-#;)6K\\ADv'+,)6YFH:wcB9}3((;>-)4)}+}+1$@)7_0<uNCLCYk]J:rA&@./8.-16<<}*3i:-&&+,_xKACFx;}=6%@W,\\AtO4>+\\%O.F_]3J:p:]7]#-0$,};92K,/:SE++#3-{?uW._j4X,pF[4+/+#/9O',4rw|_<813&}+;'4#=)&:,-Y#`;
+
+function verificar() {
+  const input = document.getElementById("senha");
+  if (input.value === senhaCorreta) {
+    input.style.display = "none";
+    document.getElementById("texto").style.display = "block";
+    digitarTexto();
+  } else {
+    erro();
+  }
+}
+
+function erro() {
+  const c = document.getElementById("container");
+  document.body.classList.add("flash");
+  c.classList.add("tremer");
+
+  setTimeout(() => {
+    c.classList.remove("tremer");
+    document.body.classList.remove("flash");
+  }, 400);
+}
+
+function digitarTexto() {
+  const alvo = document.getElementById("texto");
+  let i = 0;
+  const intervalo = setInterval(() => {
+    alvo.textContent += mensagem[i];
+    i++;
+    if (i >= mensagem.length) clearInterval(intervalo);
+  }, 8);
+}
+</script>
+
+</body>
+</html>
