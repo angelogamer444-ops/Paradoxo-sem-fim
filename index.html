@@ -1,121 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>ACESSO RESTRITO</title>
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      color: #b300ff;
-      font-family: monospace;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<title>ACESSO RESTRITO</title>
 
-    .binary {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      font-size: 14px;
-      line-height: 16px;
-      animation: glitchMove 0.15s infinite alternate;
-    }
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+  font-family: monospace;
+}
 
-    @keyframes glitchMove {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(5px); }
-    }
+/* BINÁRIO FUNDO */
+.binary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  line-height: 18px;
+  animation: glitchMove 0.15s infinite alternate;
+}
 
-    .binary span {
-      animation: blink 0.2s infinite alternate;
-    }
+/* PISCAR ROXO / PRETO */
+.binary span {
+  animation: blink 0.2s infinite alternate;
+}
 
-    @keyframes blink {
-      from { color: #b300ff; }
-      to { color: black; }
-    }
+/* GLITCH PROS LADOS */
+@keyframes glitchMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(6px); }
+}
 
-    .center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      z-index: 2;
-    }
-
-    input {
-      background: black;
-      border: 1px solid #00ff88;
-      color: #00ff88;
-      padding: 10px;
-      font-family: monospace;
-      outline: none;
-    }
-
-    .symbols {
-      margin-top: 20px;
-      font-size: 28px;
-    }
-
-    .roxo { color: #b300ff; }
-    .cinza { color: #999; }
-
-    .hint {
-      margin-top: 15px;
-      cursor: pointer;
-      color: #00ffff;
-      font-size: 20px;
-    }
-
-    .hintText {
-      display: none;
-      margin-top: 10px;
-      color: #ff00ff;
-      font-size: 14px;
-    }
-  </style>
+/* PISCAR */
+@keyframes blink {
+  from { color: #b300ff; }
+  to { color: black; }
+}
+</style>
 </head>
+
 <body>
 
-  <div class="binary" id="binary"></div>
+<div class="binary" id="binary"></div>
 
-  <div class="center">
-    <div>INSIRA A SENHA</div>
-    <input type="password" placeholder="********">
+<script>
+const binary = document.getElementById("binary");
 
-    <div class="symbols">
-      <span class="roxo">🝪</span>
-      <span class="cinza">꩜</span>
-      <span class="roxo">🝪</span>
-    </div>
+let text = "";
+for (let i = 0; i < 1200; i++) {
+  text += Math.random() > 0.5 ? "1" : "0";
+  if (i % 60 === 0) text += "<br>";
+}
 
-    <div class="hint" onclick="showHint()">?</div>
-    <div class="hintText" id="hintText">
-      "O Paradoxo é imprevisível ? ??????????"
-    </div>
-  </div>
-
-  <script>
-    const binaryDiv = document.getElementById("binary");
-
-    function generateBinary() {
-      let text = "";
-      for (let i = 0; i < 1500; i++) {
-        text += `<span>${Math.random() > 0.5 ? "1" : "0"}</span>`;
-        if (i % 80 === 0) text += "<br>";
-      }
-      binaryDiv.innerHTML = text;
-    }
-
-    generateBinary();
-    setInterval(generateBinary, 300);
-
-    function showHint() {
-      const hint = document.getElementById("hintText");
-      hint.style.display = hint.style.display === "block" ? "none" : "block";
-    }
-  </script>
+binary.innerHTML = "<span>" + text + "</span>";
+</script>
 
 </body>
 </html>
