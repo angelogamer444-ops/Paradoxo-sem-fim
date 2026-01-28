@@ -5,140 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ACESSO RESTRITO</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      background: #000;
-      color: #0f0;
-      font-family: 'Courier New', Courier, monospace;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      background:#000;
+      color:#0f0;
+      font-family:'Courier New', Courier, monospace;
+      height:100vh;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
     }
-
-    /* Fundo com símbolos semi-transparentes de Ordem Paranormal */
     .background-symbols {
-      position: absolute;
-      inset: 0;
-      opacity: 0.08;
-      pointer-events: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 120px;
+      position:absolute;
+      inset:0;
+      opacity:0.1;
+      pointer-events:none;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:150px;
     }
     .symbol {
-      font-size: 280px;
-      font-weight: bold;
-      text-shadow: 0 0 20px currentColor;
-      animation: pulse 8s infinite alternate;
+      width:300px;
+      height:300px;
+      background-size:contain;
+      background-repeat:no-repeat;
+      background-position:center;
+      filter:drop-shadow(0 0 20px currentColor);
+      animation:pulse 10s infinite alternate;
     }
-    .energia { color: #00ffff; transform: rotate(5deg); }
-    .morte   { color: #ff0044; transform: rotate(-5deg); }
+    .energia { background-image:url('https://preview.redd.it/símbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=algumhash'); /* Substitua por link real do Reddit post 1f7x2ma ou fanart Energia */ }
+    .morte   { background-image:url('https://preview.redd.it/símbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=algumhash'); /* Mesmo post, parte da Morte */ }
+    @keyframes pulse { 0%{opacity:0.08; filter:drop-shadow(0 0 10px);} 100%{opacity:0.18; filter:drop-shadow(0 0 40px);} }
 
-    @keyframes pulse {
-      0% { opacity: 0.08; text-shadow: 0 0 20px; }
-      100% { opacity: 0.15; text-shadow: 0 0 60px; }
-    }
-
-    .container {
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-
+    .container { text-align:center; z-index:10; }
     #terminal {
-      font-size: 1.4rem;
-      margin-bottom: 2rem;
-      min-height: 4rem;
-      white-space: pre-wrap;
-      color: #0f3;
-      text-shadow: 0 0 5px #0f0;
+      font-size:1.4rem;
+      margin-bottom:2rem;
+      min-height:5rem;
+      white-space:pre-wrap;
+      color:#0f3;
+      text-shadow:0 0 5px #0f0;
     }
-
-    .input-area {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .input-area { display:flex; justify-content:center; align-items:center; gap:10px; }
     #password {
-      background: #000;
-      border: 2px solid #0f0;
-      color: #0f0;
-      font-family: inherit;
-      font-size: 1.5rem;
-      padding: 12px 20px;
-      width: 420px;
-      text-align: center;
-      outline: none;
+      background:#000;
+      border:2px solid #0f0;
+      color:#0f0;
+      font-family:inherit;
+      font-size:1.6rem;
+      padding:12px 20px;
+      width:450px;
+      text-align:center;
+      outline:none;
     }
-    #password:focus {
-      box-shadow: 0 0 15px #0f0;
-      border-color: #0f7;
-    }
-
+    #password:focus { box-shadow:0 0 15px #0f0; border-color:#0f7; }
     #toggle {
-      background: #111;
-      border: 1px solid #333;
-      color: #0a0;
-      font-size: 1.1rem;
-      padding: 12px 16px;
-      cursor: pointer;
+      background:#111;
+      border:1px solid #333;
+      color:#0a0;
+      font-size:1.2rem;
+      padding:12px 16px;
+      cursor:pointer;
     }
-    #toggle:hover { background: #222; }
+    #toggle:hover { background:#222; }
 
-    /* Efeito glitch */
     @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-3px, 3px); }
-      40% { transform: translate(3px, -3px); }
-      60% { transform: translate(-2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
+      0%{transform:translate(0);}
+      20%{transform:translate(-4px,4px);}
+      40%{transform:translate(4px,-4px);}
+      60%{transform:translate(-3px,3px);}
+      80%{transform:translate(3px,-3px);}
+      100%{transform:translate(0);}
     }
+    .glitch { animation:glitch 0.5s linear infinite; color:#f0f; text-shadow:3px 0 #f00, -3px 0 #0ff; }
 
-    .glitch {
-      animation: glitch 0.4s linear infinite;
-      color: #f0f;
-      text-shadow: 2px 0 #f00, -2px 0 #0ff;
-    }
-
-    /* Tremor + piscada ao errar */
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-      20%, 40%, 60%, 80% { transform: translateX(8px); }
+      0%,100%{transform:translateX(0);}
+      10%,30%,50%,70%,90%{transform:translateX(-10px);}
+      20%,40%,60%,80%{transform:translateX(10px);}
     }
-    .error-shake {
-      animation: shake 0.6s ease;
-    }
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-    .flicker { animation: flicker 0.15s infinite alternate; }
-
-    .hidden { display: none; }
+    .error-shake { animation:shake 0.7s ease; }
+    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+    .flicker { animation:flicker 0.2s infinite alternate; }
   </style>
 </head>
 <body>
 
   <div class="background-symbols">
-    <div class="symbol energia">⚡</div> <!-- Aprox. símbolo Energia (V ou raio estilizado) -->
-    <div class="symbol morte">☠</div>   <!-- Aprox. símbolo Morte (círculo/espiral simplificado) -->
+    <div class="symbol energia"></div>
+    <div class="symbol morte"></div>
   </div>
 
   <div class="container">
     <div id="terminal"></div>
-
     <div class="input-area">
       <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
       <button id="toggle">👁</button>
@@ -147,208 +109,4 @@
 
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
-    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -. --- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
-
-    const terminal = document.getElementById('terminal');
-    const input    = document.getElementById('password');
-    const toggle   = document.getElementById('toggle');
-
-    let showing = false;
-
-    // Typewriter effect
-    function typeWriter(text, speed = 40, callback) {
-      let i = 0;
-      terminal.innerHTML = '';
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          terminal.innerHTML += text.charAt(i);
-          i++;
-        } else {
-          clearInterval(interval);
-          if (callback) callback();
-        }
-      }, speed);
-    }
-
-    // Inicial
-    typeWriter("> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => {
-      input.focus();
-    });
-
-    // Mostrar/esconder senha
-    toggle.addEventListener('click', () => {
-      showing = !showing;
-      input.type = showing ? 'text' : 'password';
-      toggle.textContent = showing ? '🙈' : '👁';
-    });
-
-    // Verificar senha
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const val = input.value.trim();
-
-        if (val === SECRET) {
-          // Acertou → limpa e mostra morse com typewriter + glitch leve
-          terminal.classList.add('glitch');
-          setTimeout(() => terminal.classList.remove('glitch'), 2000);
-
-          typeWriter("\n\nCHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
-            typeWriter(MORSE_TEXT, 20);
-          });
-          input.disabled = true;
-          toggle.disabled = true;
-        } else {
-          // Errou → tremor + flicker + glitch no terminal
-          document.body.classList.add('error-shake', 'flicker');
-          terminal.classList.add('glitch');
-
-          setTimeout(() => {
-            document.body.classList.remove('error-shake', 'flicker');
-            terminal.classList.remove('glitch');
-          }, 800);
-
-          // Limpa input silenciosamente
-          input.value = '';
-          input.focus();
-        }
-      }
-    });
-  </script>
-</body>
-</html>  background: black;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 10;
-}
-
-/* CONTEÚDO */
-#box {
-  color: #b300ff;
-  font-size: 20px;
-}
-
-/* BOTÕES */
-.buttons {
-  margin-top: 20px;
-}
-button {
-  background: black;
-  color: #b300ff;
-  border: 1px solid #b300ff;
-  padding: 8px 20px;
-  margin: 0 10px;
-  font-family: monospace;
-  font-size: 16px;
-}
-
-/* TEXTO FINAL */
-#final {
-  display: none;
-  animation: blink 0.8s infinite alternate;
-}
-
-@keyframes blink {
-  from { color: #b300ff; }
-  to { color: black; }
-}
-
-/* CLARÃO */
-.flash {
-  animation: flash 0.6s ease;
-}
-@keyframes flash {
-  0% { background: black; }
-  50% { background: radial-gradient(circle, #b300ff 0%, black 70%); }
-  100% { background: black; }
-}
-</style>
-</head>
-
-<body>
-
-<div id="binary"></div>
-
-<div id="overlay">
-  <div id="box">
-    <div id="question">
-      Você é curioso, não é?
-      <div class="buttons">
-        <button onclick="no()">Não</button>
-        <button onclick="yes()">Sim</button>
-      </div>
-    </div>
-
-    <div id="final">
-      O paradoxo gosta do imprevisível<br>
-      e a curiosidade faz parte disso...
-    </div>
-  </div>
-</div>
-
-<script>
-/* BINÁRIO FULLSCREEN */
-const binary = document.getElementById("binary");
-function gerarBinario() {
-  let txt = "";
-  for (let i = 0; i < 5000; i++) {
-    txt += Math.random() > 0.5 ? "1" : "0";
-    if (i % 80 === 0) txt += "\n";
-  }
-  binary.textContent = txt;
-}
-gerarBinario();
-
-/* TOQUE LONGO (MOBILE + PC) */
-let hold;
-
-function iniciar() {
-  hold = setTimeout(ativar, 3000);
-}
-function cancelar() {
-  clearTimeout(hold);
-}
-
-document.body.addEventListener("mousedown", iniciar);
-document.body.addEventListener("mouseup", cancelar);
-document.body.addEventListener("touchstart", iniciar);
-document.body.addEventListener("touchend", cancelar);
-
-/* ATIVA EVENTO */
-function ativar() {
-  document.body.classList.add("flash");
-  setTimeout(() => {
-    document.getElementById("overlay").style.display = "flex";
-  }, 600);
-}
-
-/* RESPOSTAS */
-function no() {
-  document.getElementById("overlay").style.display = "none";
-}
-
-function yes() {
-  document.getElementById("question").style.display = "none";
-  document.getElementById("final").style.display = "block";
-  setTimeout(decodificar, 3000);
-}
-
-/* DECODIFICAÇÃO */
-function decodificar() {
-  let codigo = "01001111 00100000 01010000 01100001 01110010 01100001 01100100 01101111 01111000 01101111";
-  binary.textContent = "";
-  let i = 0;
-
-  let intervalo = setInterval(() => {
-    binary.textContent += codigo[i] || "";
-    i++;
-    if (i >= codigo.length) clearInterval(intervalo);
-  }, 70);
-}
-</script>
-
-</body>
-</html>
-
+    const MORSE = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-..
