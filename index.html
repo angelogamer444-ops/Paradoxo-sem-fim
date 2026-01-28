@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -126,7 +127,7 @@
       opacity:0;
       pointer-events:none;
       transition:opacity 1s;
-      padding:80px 40px;
+      padding:100px 40px 40px;
       text-align:left;
       overflow-y:auto;
     }
@@ -178,7 +179,6 @@
     </div>
   </div>
 
-  <!-- Botão secreto no canto superior direito -->
   <span id="secret-btn">·</span>
 
   <div class="secret-screen" id="secretScreen">
@@ -190,6 +190,7 @@
     const SECRET = "O Paradoxo é imprevisível e inevitável";
     const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
     const MORSE_TEXT = "-. --- / .--. --- .-. --- --- / ...- .- / -. --- / .--. --- .-. .- --- / .-.. .- / ...- --- -.-. . / .- -.-. .... .- .-. .- / --- / ... . --. .-. . -.. --- / -.. .- / ...- .. .- --. . -- / -. --- / - . -- .--. --- / .- -.-. .... . / --- / .--. --- .-. .- --- .-.-.- .-.-.- .-.-.- / /";
+    const SECRET_TEXT = "PESSOAS QUE VOLTAM NO TEMPO TEM UM DESTINO HORRIVEL\nESSAS PESSOAS NORMALMENTE MUDAM ALGO MUITO GRAVE NA REALIDADE\nPOR EXEMPLO UMA MORTE QUE ESTAVA DESTINADA A ACONTECER\nUM EVENTO MUITO IMPORTANTE DUMA EPOCA\nNORMALMENTE O QUE ACONTECE COM ESSAS PESSOAS NÃO É EXPLICADO\nEXISTEM TEORIAS VAGAS DE MONSTROS QUE SÃO UMA RASGA NA REALIDADE\nQUE PROTEGEM A LINHA TEMPORAL CHAMADOS DE DEMENTADORES\nELES VÃO ATRÁS DE QUEM SE ENVOLVE COM O TEMPO\nE NÃO MATAM ELAS\nELE PETRIFICA A PESSOA ETERNAMENTE\nSENDO TORTURADA PELO TEMPO\nVENDO DESGRAÇAS MORTES SEM MORRER ETERNAMENTE\nVENDO TUDO ACONTECER\nA ESTATUA É INQUEBRAVEL E INTOCÁVEL\nE TAMBÉM INVISÍVEL A OLHOS HUMANOS.";
 
     const term = document.getElementById('terminal');
     const pw = document.getElementById('password');
@@ -264,7 +265,7 @@
       secretScreen.classList.add('active');
       secretText.innerHTML = '';
       setTimeout(() => {
-        secretText.innerHTML = '<span class="glitch">Você não deveria estar aqui.</span><br><br>';
+        secretText.innerHTML += '<span class="glitch">Você não deveria estar aqui.</span><br><br>';
         setTimeout(() => {
           secretText.innerHTML += 'Você é uma pessoa curiosa?<br><br>';
           secretResp.style.display = 'block';
@@ -279,7 +280,10 @@
         const resp = secretResp.value.trim().toLowerCase();
         if (resp.includes('sim') || resp === 's') {
           secretText.innerHTML += '> CURIOSIDADE DETECTADA...<br><br>';
-          appendTypeWriter(secretText, SECRET_TEXT, 40);
+          appendTypeWriter(secretText, SECRET_TEXT, 40, () => {
+            secretText.innerHTML += '<br><br>> [FIM DO REGISTRO]\n';
+            secretText.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          });
           secretResp.disabled = true;
           secretResp.style.display = 'none';
         } else {
