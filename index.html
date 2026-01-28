@@ -18,16 +18,19 @@ html, body {
 /* BINÁRIO */
 #binary {
   position: fixed;
-  inset: 0;
-  color: #7a00ff;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  color: #8a00ff;
   font-size: 12px;
   line-height: 14px;
   opacity: 0.35;
-  pointer-events: none;
   white-space: pre-wrap;
+  pointer-events: none;
 }
 
-/* OVERLAY */
+/* OVERLAY CENTRAL */
 #overlay {
   position: fixed;
   inset: 0;
@@ -35,10 +38,14 @@ html, body {
   display: none;
   align-items: center;
   justify-content: center;
-  color: #b300ff;
-  font-size: 20px;
   text-align: center;
   z-index: 10;
+}
+
+/* CONTEÚDO */
+#box {
+  color: #b300ff;
+  font-size: 20px;
 }
 
 /* BOTÕES */
@@ -49,10 +56,10 @@ button {
   background: black;
   color: #b300ff;
   border: 1px solid #b300ff;
-  padding: 8px 18px;
+  padding: 8px 20px;
   margin: 0 10px;
   font-family: monospace;
-  cursor: pointer;
+  font-size: 16px;
 }
 
 /* TEXTO FINAL */
@@ -83,38 +90,52 @@ button {
 <div id="binary"></div>
 
 <div id="overlay">
-  <div id="question">
-    Você é curioso, não é?
-    <div class="buttons">
-      <button onclick="no()">Não</button>
-      <button onclick="yes()">Sim</button>
+  <div id="box">
+    <div id="question">
+      Você é curioso, não é?
+      <div class="buttons">
+        <button onclick="no()">Não</button>
+        <button onclick="yes()">Sim</button>
+      </div>
     </div>
-  </div>
 
-  <div id="final">
-    O paradoxo gosta do imprevisível<br>
-    e a curiosidade faz parte disso...
+    <div id="final">
+      O paradoxo gosta do imprevisível<br>
+      e a curiosidade faz parte disso...
+    </div>
   </div>
 </div>
 
 <script>
-/* BINÁRIO */
-const binaryEl = document.getElementById("binary");
-let binaryText = "";
-for (let i = 0; i < 3000; i++) {
-  binaryText += Math.random() > 0.5 ? "1" : "0";
-  if (i % 80 === 0) binaryText += "\n";
+/* BINÁRIO FULLSCREEN */
+const binary = document.getElementById("binary");
+function gerarBinario() {
+  let txt = "";
+  for (let i = 0; i < 5000; i++) {
+    txt += Math.random() > 0.5 ? "1" : "0";
+    if (i % 80 === 0) txt += "\n";
+  }
+  binary.textContent = txt;
 }
-binaryEl.textContent = binaryText;
+gerarBinario();
 
-/* BOTÃO INVISÍVEL */
+/* TOQUE LONGO (MOBILE + PC) */
 let hold;
-document.body.addEventListener("mousedown", () => {
-  hold = setTimeout(trigger, 3000);
-});
-document.body.addEventListener("mouseup", () => clearTimeout(hold));
 
-function trigger() {
+function iniciar() {
+  hold = setTimeout(ativar, 3000);
+}
+function cancelar() {
+  clearTimeout(hold);
+}
+
+document.body.addEventListener("mousedown", iniciar);
+document.body.addEventListener("mouseup", cancelar);
+document.body.addEventListener("touchstart", iniciar);
+document.body.addEventListener("touchend", cancelar);
+
+/* ATIVA EVENTO */
+function ativar() {
   document.body.classList.add("flash");
   setTimeout(() => {
     document.getElementById("overlay").style.display = "flex";
@@ -129,23 +150,20 @@ function no() {
 function yes() {
   document.getElementById("question").style.display = "none";
   document.getElementById("final").style.display = "block";
-
-  setTimeout(() => {
-    decode();
-  }, 3000);
+  setTimeout(decodificar, 3000);
 }
 
 /* DECODIFICAÇÃO */
-function decode() {
-  let text = "01001111 00100000 01010000 01100001 01110010 01100001 01100100 01101111 01111000 01101111";
+function decodificar() {
+  let codigo = "01001111 00100000 01010000 01100001 01110010 01100001 01100100 01101111 01111000 01101111";
+  binary.textContent = "";
   let i = 0;
-  binaryEl.textContent = "";
 
-  let interval = setInterval(() => {
-    binaryEl.textContent += text[i] || "";
+  let intervalo = setInterval(() => {
+    binary.textContent += codigo[i] || "";
     i++;
-    if (i > text.length) clearInterval(interval);
-  }, 80);
+    if (i >= codigo.length) clearInterval(intervalo);
+  }, 70);
 }
 </script>
 
