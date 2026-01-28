@@ -20,76 +20,96 @@
     .background-symbols {
       position:absolute;
       inset:0;
-      opacity:0.1;
+      opacity:0.08;
       pointer-events:none;
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:150px;
+      gap:140px;
     }
     .symbol {
-      width:300px;
-      height:300px;
+      width:320px;
+      height:320px;
       background-size:contain;
       background-repeat:no-repeat;
       background-position:center;
-      filter:drop-shadow(0 0 20px currentColor);
-      animation:pulse 10s infinite alternate;
+      filter:drop-shadow(0 0 25px currentColor);
+      animation:pulse 12s infinite alternate;
     }
-    .energia { background-image:url('https://preview.redd.it/símbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=algumhash'); /* Substitua por link real do Reddit post 1f7x2ma ou fanart Energia */ }
-    .morte   { background-image:url('https://preview.redd.it/símbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=algumhash'); /* Mesmo post, parte da Morte */ }
-    @keyframes pulse { 0%{opacity:0.08; filter:drop-shadow(0 0 10px);} 100%{opacity:0.18; filter:drop-shadow(0 0 40px);} }
+    .energia { background-image: url('https://preview.redd.it/s%C3%ADmbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=...'); } /* Troque pela URL real do Reddit post 1f7x2ma - parte Energia */
+    .morte   { background-image: url('https://preview.redd.it/s%C3%ADmbolo-de-energia-e-morte-teste-v0-xyz.jpg?width=640&crop=smart&auto=webp&s=...'); } /* Parte Morte do mesmo post */
+    @keyframes pulse { 0%{opacity:0.06; filter:drop-shadow(0 0 15px);} 100%{opacity:0.14; filter:drop-shadow(0 0 50px);} }
 
-    .container { text-align:center; z-index:10; }
+    .container { text-align:center; z-index:10; position:relative; }
     #terminal {
       font-size:1.4rem;
-      margin-bottom:2rem;
+      margin-bottom:1.5rem;
       min-height:5rem;
       white-space:pre-wrap;
       color:#0f3;
-      text-shadow:0 0 5px #0f0;
+      text-shadow:0 0 6px #0f0;
     }
-    .input-area { display:flex; justify-content:center; align-items:center; gap:10px; }
+    .input-area {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:12px;
+      position:relative;
+    }
     #password {
       background:#000;
       border:2px solid #0f0;
       color:#0f0;
       font-family:inherit;
       font-size:1.6rem;
-      padding:12px 20px;
-      width:450px;
+      padding:14px 20px;
+      width:480px;
       text-align:center;
       outline:none;
     }
-    #password:focus { box-shadow:0 0 15px #0f0; border-color:#0f7; }
+    #password:focus { box-shadow:0 0 18px #0f0; border-color:#0f7; }
     #toggle {
       background:#111;
-      border:1px solid #333;
-      color:#0a0;
-      font-size:1.2rem;
-      padding:12px 16px;
+      border:1px solid #444;
+      color:#0c0;
+      font-size:1.3rem;
+      padding:14px 18px;
       cursor:pointer;
+      user-select:none;
     }
-    #toggle:hover { background:#222; }
+    #toggle:hover { background:#222; color:#0f0; }
+
+    #hint {
+      position:absolute;
+      right:-35px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:2.2rem;
+      color:#0f0;
+      cursor:pointer;
+      text-shadow:0 0 8px #0f0;
+      user-select:none;
+    }
+    #hint:hover { color:#0f7; text-shadow:0 0 15px #0f0; }
 
     @keyframes glitch {
       0%{transform:translate(0);}
-      20%{transform:translate(-4px,4px);}
-      40%{transform:translate(4px,-4px);}
-      60%{transform:translate(-3px,3px);}
-      80%{transform:translate(3px,-3px);}
+      20%{transform:translate(-5px,5px);}
+      40%{transform:translate(5px,-5px);}
+      60%{transform:translate(-4px,4px);}
+      80%{transform:translate(4px,-4px);}
       100%{transform:translate(0);}
     }
-    .glitch { animation:glitch 0.5s linear infinite; color:#f0f; text-shadow:3px 0 #f00, -3px 0 #0ff; }
+    .glitch { animation:glitch 0.6s linear infinite; color:#f0f !important; text-shadow:4px 0 #f00, -4px 0 #0ff; }
 
     @keyframes shake {
       0%,100%{transform:translateX(0);}
-      10%,30%,50%,70%,90%{transform:translateX(-10px);}
-      20%,40%,60%,80%{transform:translateX(10px);}
+      10%,30%,50%,70%,90%{transform:translateX(-12px);}
+      20%,40%,60%,80%{transform:translateX(12px);}
     }
-    .error-shake { animation:shake 0.7s ease; }
-    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
-    .flicker { animation:flicker 0.2s infinite alternate; }
+    .error-shake { animation:shake 0.8s ease; }
+    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+    .flicker { animation:flicker 0.18s infinite alternate; }
   </style>
 </head>
 <body>
@@ -101,12 +121,88 @@
 
   <div class="container">
     <div id="terminal"></div>
+
     <div class="input-area">
       <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
       <button id="toggle">👁</button>
+      <span id="hint">?</span>
     </div>
   </div>
 
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
-    const MORSE = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-..
+    const MORSE_TEXT = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- / - . -- / ..- -- / -.. . ... - .. -. --- / .... --- .-. .-. ...- . .-.. / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- .-. -- .- .-.. -- . -. - . / -- ..- -.. .- -- / .- .-.. --. --- / -- ..- .. - --- / --. .-. .- ...- . / -. .- / .-. . .- .-.. .. -.. .- -.. . / .--. --- .-. / . -..- . -- .--. .-.. --- / ..- -- .- / -- --- .-. - . / --.- ..- . / . ... - .- ...- .- / -.. . ... - .. -. .- -.. .- / .- / .- -.-. --- -. - . -.-. . .-. / ..- -- / . ...- . -. - --- / -- ..- .. - --- / .. -- .--. --- .-. - .- -. - . / -.. ..- -- .- / .--. --- -.-. .- / -. --- .-. -- .- .-.. -- . -. - . / --- / --.- ..- . / .- -.-. --- -. - . -.-. . / -.-. --- -- / . ... ... .- ... / .--. . ... ... --- .- ... / -. --- / / . -..- .--. .-.. .. -.-. .- -.. --- / . -..- .. ... - . -- / - . --- .-. .. .- ... / ...- .- --. .- ... / -.. . / -- --- -. ... - .-. --- ... / --.- ..- . / ... --- / ..- -- .- / .-. .- ... --. .- / -. .- / .-. . .- .-.. .. -.. .- -.. . / --.- ..- . / .--. .-. --- - . --. . -- / .- / .-.. .. -. .... .- / - . -- .--. --- .-. .- .-.. / -.-. .... .- -- .- -.. --- ... / -.. . / -.. . -- . -. - .- -.. --- .-. . ... / . .-.. . ... / ...- --- / .- - .-. ... / -.. . / --.- ..- . -- / ... . / . -. ...- --- .-.. ...- . / -.-. --- -- / --- / - . -- .--. --- / . / -. --- / -- .- - .- / . .-.. .- ... / . .-.. . / .--. . - .-. .. ..-. .. -.-. .- / .- / .--. . ... ... --- .- / . - . .-. -. .- -- . -. - . / ... . -. -.. --- / - --- .-. - ..- .-. .- -.. .- / .--. . .-.. --- / - . -- .--. --- / ...- . -. -.. --- / -.. . ... --. .-. .- .- ... / -- --- .-. - . ... / ... . -- / -- --- .-. .-. . .-. / . - . .-. -. .- -- . -. - . / .-.. / ...- . -. -.. --- / - ..- -.. --- / .- -.-. --- -. - . -.-. . .-. / .- / . ... - - ..- .- / / .. -. --.- ..- . -... .-. ...- . .-.. / . / .. -. - --- -.-. ...- . .-.. / . / - .- -- -... -- / .. -. ...- .. ... ...- . .-.. / .- / --- .-.. .... --- ... / .... ..- -- .- -. --- ... .-.-.- / ";
+    const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
+
+    const term = document.getElementById('terminal');
+    const pw = document.getElementById('password');
+    const tog = document.getElementById('toggle');
+    const hint = document.getElementById('hint');
+
+    let showing = false;
+
+    function typeWriter(text, speed=35, callback) {
+      let i = 0;
+      term.innerHTML = '';
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          term.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, speed);
+    }
+
+    // Início
+    typeWriter("> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => {
+      pw.focus();
+    });
+
+    // Mostrar/esconder senha
+    tog.addEventListener('click', () => {
+      showing = !showing;
+      pw.type = showing ? 'text' : 'password';
+      tog.textContent = showing ? '🙈' : '👁';
+      pw.focus();
+    });
+
+    // Dica ao clicar no ?
+    hint.addEventListener('click', () => {
+      term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
+      hint.style.color = '#f00'; // Muda cor pra indicar que já usou
+      hint.style.cursor = 'default';
+      hint.removeEventListener('click', arguments.callee); // Desativa depois de 1 clique
+    });
+
+    // Verificar senha no Enter
+    pw.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = pw.value.trim();
+
+        if (val === SECRET) {
+          term.classList.add('glitch');
+          setTimeout(() => term.classList.remove('glitch'), 3000);
+          typeWriter("\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
+            typeWriter(MORSE_TEXT, 18);
+          });
+          pw.disabled = true;
+          tog.disabled = true;
+          hint.style.display = 'none';
+        } else {
+          document.body.classList.add('error-shake', 'flicker');
+          term.classList.add('glitch');
+          setTimeout(() => {
+            document.body.classList.remove('error-shake', 'flicker');
+            term.classList.remove('glitch');
+          }, 1000);
+          pw.value = '';
+          pw.focus();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
