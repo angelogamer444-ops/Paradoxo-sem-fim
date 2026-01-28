@@ -12,7 +12,7 @@
       font-family:'Courier New', Courier, monospace;
       min-height:100vh;
       overflow-y:scroll;
-      padding:80px 30px 150px;
+      padding:80px 30px 200px;
       position:relative;
     }
     .background-symbols {
@@ -42,7 +42,7 @@
       max-width:1000px;
       width:100%;
       margin:0 auto;
-      padding:40px 0 200px;
+      padding:40px 0 250px;
     }
     #terminal {
       font-size:1.8rem;
@@ -51,7 +51,7 @@
       white-space:pre-wrap;
       color:#ba55d3;
       text-shadow:0 0 10px #8a2be2;
-      line-height:1.5;
+      line-height:1.6;
       text-align:left;
       max-width:100%;
     }
@@ -115,19 +115,27 @@
       color:#8a2be2;
       display:flex;
       flex-direction:column;
-      justify-content:center;
+      justify-content:flex-start;
       align-items:center;
-      font-size:2.2rem;
+      font-size:2rem;
       text-shadow:0 0 20px #8a2be2;
       z-index:100;
       opacity:0;
       pointer-events:none;
       transition:opacity 1s;
-      padding:50px;
-      text-align:center;
+      padding:80px 40px;
+      text-align:left;
       overflow-y:auto;
     }
     .secret-screen.active { opacity:1; pointer-events:all; }
+    .secret-screen #secretText {
+      width:100%;
+      max-width:900px;
+      margin-bottom:40px;
+    }
+    #secretResponse {
+      margin-top:20px;
+    }
 
     @keyframes glitch {
       0%{transform:translate(0);}
@@ -185,18 +193,17 @@
 
     let showing = false;
 
-    function typeWriter(el, text, speed=45, cb) {
+    function appendTypeWriter(el, text, speed=45, cb) {
       let i = 0;
-      // Adiciona ao final sem apagar o existente
-      const start = () => {
+      function type() {
         if (i < text.length) {
           el.innerHTML += text.charAt(i);
           i++;
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-          setTimeout(start, speed);
+          el.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          setTimeout(type, speed);
         } else if (cb) cb();
-      };
-      start();
+      }
+      type();
     }
 
     // Início
@@ -212,7 +219,7 @@
 
     hint.addEventListener('click', () => {
       term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      term.scrollIntoView({ behavior: 'smooth', block: 'end' });
       hint.style.color = '#ff00ff';
       hint.style.pointerEvents = 'none';
     });
@@ -225,10 +232,10 @@
           term.classList.add('glitch');
           setTimeout(() => term.classList.remove('glitch'), 4000);
           term.innerHTML += "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n";
-          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-          typeWriter(term, MORSE_TEXT, 28, () => {
+          term.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          appendTypeWriter(term, MORSE_TEXT, 28, () => {
             term.innerHTML += '\n\n> [FIM DO ARQUIVO]\n';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            term.scrollIntoView({ behavior: 'smooth', block: 'end' });
           });
           pw.disabled = tog.disabled = true;
           hint.style.display = 'none';
@@ -249,9 +256,9 @@
       secretScreen.classList.add('active');
       secretText.innerHTML = '';
       setTimeout(() => {
-        secretText.innerHTML = '<span class="glitch">Você não deveria estar aqui.</span>';
+        secretText.innerHTML = '<span class="glitch">Você não deveria estar aqui.</span><br><br>';
         setTimeout(() => {
-          secretText.innerHTML += '<br><br>Você é uma pessoa curiosa?';
+          secretText.innerHTML += 'Você é uma pessoa curiosa?<br><br>';
           secretResp.style.display = 'block';
           secretResp.focus();
         }, 3000);
@@ -263,8 +270,8 @@
         e.preventDefault();
         const resp = secretResp.value.trim().toLowerCase();
         if (resp.includes('sim') || resp === 's') {
-          secretText.innerHTML += '<br><br>> CURIOSIDADE DETECTADA...<br><br>';
-          typeWriter(secretText, SECRET_TEXT, 40);
+          secretText.innerHTML += '> CURIOSIDADE DETECTADA...<br><br>';
+          appendTypeWriter(secretText, SECRET_TEXT, 40);
           secretResp.disabled = true;
           secretResp.style.display = 'none';
         } else {
