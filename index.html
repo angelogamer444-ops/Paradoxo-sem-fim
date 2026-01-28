@@ -8,7 +8,7 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background:#000;
-      color:#0f0;
+      color:#ba55d3;
       font-family:'Courier New', Courier, monospace;
       min-height:100vh;
       overflow-y:auto;
@@ -16,124 +16,140 @@
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding:60px 20px;
+      padding:80px 30px;
       position:relative;
     }
     .background-symbols {
       position:fixed;
       inset:0;
-      opacity:0.07;
+      opacity:0.09;
       pointer-events:none;
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:220px;
+      gap:240px;
       z-index:1;
     }
     .symbol {
-      width:420px;
-      height:420px;
+      width:450px;
+      height:450px;
       background-size:contain;
       background-repeat:no-repeat;
       background-position:center;
-      filter:drop-shadow(0 0 35px currentColor);
-      animation:pulse 14s infinite alternate;
+      filter:drop-shadow(0 0 40px #8a2be2);
+      animation:pulse 15s infinite alternate;
     }
-    @keyframes pulse { 0%{opacity:0.05;} 100%{opacity:0.13;} }
+    @keyframes pulse { 0%{opacity:0.06;} 100%{opacity:0.16;} }
 
     .container {
       text-align:center;
       z-index:10;
-      max-width:900px;
+      max-width:1000px;
       width:100%;
-      padding:50px 0;
+      padding:60px 0;
     }
     #terminal {
-      font-size:1.9rem;
-      margin-bottom:3rem;
-      min-height:8rem;
+      font-size:2.1rem;
+      margin-bottom:3.5rem;
+      min-height:10rem;
       white-space:pre-wrap;
-      color:#0f3;
-      text-shadow:0 0 10px #0f0;
+      color:#ba55d3;
+      text-shadow:0 0 12px #8a2be2;
       line-height:1.5;
     }
     .input-area {
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:18px;
+      gap:20px;
       position:relative;
       margin:0 auto;
     }
     #password, #secret-response {
       background:#000;
-      border:2px solid #0f0;
-      color:#0f0;
+      border:2px solid #8a2be2;
+      color:#ba55d3;
       font-family:inherit;
-      font-size:2rem;
-      padding:18px 28px;
-      width:720px;
-      max-width:90vw;
+      font-size:2.2rem;
+      padding:20px 30px;
+      width:780px;
+      max-width:92vw;
       text-align:center;
       outline:none;
-      display:none; /* #secret-response começa escondido */
     }
-    #password { display:block; }
-    #password:focus, #secret-response:focus { box-shadow:0 0 25px #0f0; border-color:#0f7; }
+    #password:focus, #secret-response:focus { 
+      box-shadow:0 0 30px #8a2be2; 
+      border-color:#ba55d3; 
+    }
     #toggle {
       background:#111;
       border:1px solid #444;
-      color:#0c0;
-      font-size:1.5rem;
-      padding:18px 22px;
+      color:#ba55d3;
+      font-size:1.6rem;
+      padding:20px 24px;
       cursor:pointer;
     }
-    #toggle:hover { background:#222; color:#0f0; }
+    #toggle:hover { background:#222; color:#d8bfd8; }
 
     #hint {
-      font-size:2.8rem;
-      color:#0f0;
+      font-size:3rem;
+      color:#ba55d3;
       cursor:pointer;
-      text-shadow:0 0 12px #0f0;
+      text-shadow:0 0 15px #8a2be2;
       user-select:none;
     }
-    #hint:hover { color:#0f7; }
+    #hint:hover { color:#d8bfd8; }
 
     #secret-btn {
       position:absolute;
-      right:-50px;
-      font-size:1.8rem;
+      right:-60px;
+      font-size:2rem;
       color:#333;
       cursor:pointer;
       user-select:none;
-      opacity:0.4;
+      opacity:0.5;
       transition:opacity 0.3s;
     }
-    #secret-btn:hover { opacity:0.8; color:#555; }
+    #secret-btn:hover { opacity:0.9; color:#555; }
 
     .secret-screen {
       position:fixed;
       inset:0;
       background:#000;
-      color:#800080;
+      color:#8a2be2;
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      font-size:3rem;
-      text-shadow:0 0 20px #800080;
+      font-size:2.8rem;
+      text-shadow:0 0 25px #8a2be2;
       z-index:100;
       opacity:0;
       pointer-events:none;
-      transition:opacity 1s;
+      transition:opacity 1.5s;
+      padding:40px;
+      text-align:center;
     }
     .secret-screen.active { opacity:1; pointer-events:all; }
 
-    @keyframes glitch { ... } /* mantenho o mesmo de antes */
-    .glitch { animation:glitch 0.6s linear infinite; color:#f0f !important; text-shadow:5px 0 #f00, -5px 0 #0ff; }
-    .error-shake { animation:shake 0.8s ease; }
-    .flicker { animation:flicker 0.18s infinite alternate; }
-    /* keyframes de shake, glitch, flicker iguais às anteriores */
+    @keyframes glitch {
+      0%{transform:translate(0);}
+      20%{transform:translate(-6px,6px);}
+      40%{transform:translate(6px,-6px);}
+      60%{transform:translate(-5px,5px);}
+      80%{transform:translate(5px,-5px);}
+      100%{transform:translate(0);}
+    }
+    .glitch { animation:glitch 0.7s linear infinite; color:#d8bfd8 !important; text-shadow:6px 0 #ff00ff, -6px 0 #00ffff; }
+
+    @keyframes shake {
+      0%,100%{transform:translateX(0);}
+      10%,30%,50%,70%,90%{transform:translateX(-14px);}
+      20%,40%,60%,80%{transform:translateX(14px);}
+    }
+    .error-shake { animation:shake 0.9s ease; }
+    @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:0.12;} }
+    .flicker { animation:flicker 0.2s infinite alternate; }
   </style>
 </head>
 <body>
@@ -150,7 +166,7 @@
       <input type="password" id="password" placeholder="INSIRA A CHAVE" autocomplete="off" autofocus/>
       <button id="toggle">👁</button>
       <span id="hint">?</span>
-      <span id="secret-btn">·</span> <!-- Botão secreto discreto (ponto) -->
+      <span id="secret-btn">·</span>
     </div>
   </div>
 
@@ -161,11 +177,8 @@
 
   <script>
     const SECRET = "O Paradoxo é imprevisível e inevitável";
-    const MORSE_ORIGINAL = ".--. . ... ... --- .- ... / --.- ..- . / ...- --- .-.. - .- -- / -. --- / - . -- .--. --- ..."; // abreviado pra exemplo
     const HINT_TEXT = "O Paradoxo é imprevisível ? ??????????";
-
-    // Morse "codificado" (shift simples no alfabeto Morse: A->B, B->C, ..., Z->A, . e / mantidos)
-    const MORSE_CODED = MORSE_ORIGINAL.replace(/[A-Z]/g, c => String.fromCharCode(((c.charCodeAt(0) - 65 + 1) % 26) + 65));
+    const SECRET_TEXT = "PESSOAS QUE VOLTAM NO TEMPO TEM UM DESTINO HORRIVEL\nESSAS PESSOAS NORMALMENTE MUDAM ALGO MUITO GRAVE NA REALIDADE\nPOR EXEMPLO UMA MORTE QUE ESTAVA DESTINADA A ACONTECER\nUM EVENTO MUITO IMPORTANTE DUMA EPOCA\nNORMALMENTE O QUE ACONTECE COM ESSAS PESSOAS NÃO É EXPLICADO\nEXISTEM TEORIAS VAGAS DE MONSTROS QUE SÃO UMA RASGA NA REALIDADE\nQUE PROTEGEM A LINHA TEMPORAL CHAMADOS DE DEMENTADORES\nELES VÃO ATRÁS DE QUEM SE ENVOLVE COM O TEMPO\nE NÃO MATAM ELAS\nELE PETRIFICA A PESSOA ETERNAMENTE\nSENDO TORTURADA PELO TEMPO\nVENDO DESGRAÇAS MORTES SEM MORRER ETERNAMENTE\nVENDO TUDO ACONTECER\nA ESTATUA É INQUEBRAVEL E INTOCÁVEL\nE TAMBÉM INVISÍVEL A OLHOS HUMANOS.";
 
     const term = document.getElementById('terminal');
     const pw = document.getElementById('password');
@@ -178,17 +191,21 @@
 
     let showing = false;
 
-    function typeWriter(el, text, speed=35, cb) {
+    function typeWriter(el, text, speed=40, cb) {
       let i = 0;
       el.innerHTML = '';
       const iv = setInterval(() => {
-        if (i < text.length) el.innerHTML += text[i++];
-        else { clearInterval(iv); if (cb) cb(); }
+        if (i < text.length) {
+          el.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(iv);
+          if (cb) cb();
+        }
       }, speed);
     }
 
-    // Início normal
-    typeWriter(term, "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 30, () => pw.focus());
+    typeWriter(term, "> ACESSO RESTRITO\n> INSIRA A CHAVE PARA CONTINUAR...\n\n", 35, () => pw.focus());
 
     tog.addEventListener('click', () => {
       showing = !showing;
@@ -199,7 +216,7 @@
 
     hint.addEventListener('click', () => {
       term.innerHTML += `\n\n> DICA: ${HINT_TEXT}\n\n`;
-      hint.style.color = '#f00';
+      hint.style.color = '#ff00ff';
       hint.style.pointerEvents = 'none';
     });
 
@@ -209,18 +226,21 @@
         const val = pw.value.trim();
         if (val === SECRET) {
           term.classList.add('glitch');
-          setTimeout(() => term.classList.remove('glitch'), 3000);
-          typeWriter(term, "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 25, () => {
-            typeWriter(term, MORSE_ORIGINAL, 18);
+          setTimeout(() => term.classList.remove('glitch'), 4000);
+          typeWriter(term, "\n\n> CHAVE ACEITA. ARQUIVO DESBLOQUEADO.\n\n", 30, () => {
+            // Morse original aqui se quiser manter
+            // typeWriter(term, MORSE_TEXT, 20);
+            term.innerHTML += "\n> [ARQUIVO PRINCIPAL DESBLOQUEADO]\n";
           });
-          pw.disabled = tog.disabled = hint.style.display = 'none';
+          pw.disabled = tog.disabled = true;
+          hint.style.display = 'none';
         } else {
           document.body.classList.add('error-shake','flicker');
           term.classList.add('glitch');
           setTimeout(() => {
             document.body.classList.remove('error-shake','flicker');
             term.classList.remove('glitch');
-          }, 1000);
+          }, 1200);
           pw.value = '';
           pw.focus();
         }
@@ -232,7 +252,7 @@
       secretScreen.classList.add('active');
       secretText.innerHTML = '';
       setTimeout(() => {
-        secretText.innerHTML = '<span style="animation:glitch 2s infinite;">Você não deveria estar aqui.</span>';
+        secretText.innerHTML = '<span class="glitch">Você não deveria estar aqui.</span>';
         setTimeout(() => {
           secretText.innerHTML += '<br><br>Você é uma pessoa curiosa?';
           secretResp.style.display = 'block';
@@ -245,12 +265,11 @@
       if (e.key === 'Enter') {
         e.preventDefault();
         const resp = secretResp.value.trim().toLowerCase();
-        if (resp === 'sim' || resp === 's') {
+        if (resp.includes('sim') || resp === 's') {
           secretText.innerHTML = '<br><br>> CURIOSIDADE DETECTADA...<br><br>';
-          typeWriter(secretText, MORSE_CODED, 20, () => {
-            // Mantém toggle e hint visíveis aqui se quiser, mas como é tela secreta, pode deixar só o texto
-          });
+          typeWriter(secretText, SECRET_TEXT, 35);
           secretResp.disabled = true;
+          secretResp.style.display = 'none';
         } else {
           secretScreen.classList.remove('active');
           secretResp.value = '';
